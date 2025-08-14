@@ -1,31 +1,46 @@
+// src/components/dashboard/LogUploader.jsx
+import { useState } from 'react';
+
 const LogUploader = () => {
+  const [files, setFiles] = useState([]);
+
+  const handleUpload = (e) => {
+    setFiles(Array.from(e.target.files));
+  };
+
+  const clearFiles = () => setFiles([]);
+
   return (
     <div className="bg-card-dark rounded-lg p-6">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center space-x-2">
-          <span className="text-accent-blue">📤</span>
-          <h2 className="text-xl font-semibold">System Log Upload</h2>
-        </div>
-        <span className="px-3 py-1 bg-blue-500 bg-opacity-20 text-accent-blue rounded text-sm">Upload</span>
-      </div>
-      
-      <div className="mb-4">
-        <textarea 
-          className="w-full h-32 bg-base-dark rounded-lg p-4 text-gray-300 resize-none"
-          placeholder="Paste your Event Viewer logs here for analysis..."
-        />
-      </div>
-
-      <div className="flex justify-between">
-        <button className="px-4 py-2 border border-accent-blue text-accent-blue rounded hover:bg-accent-blue hover:bg-opacity-10">
-          Get File Suggestion
+      <h2 className="text-xl font-semibold mb-4">Upload Logs</h2>
+      <input
+        type="file"
+        multiple
+        onChange={handleUpload}
+        className="w-full p-2 rounded bg-base-dark text-white border border-gray-700"
+      />
+      <div className="mt-4 flex space-x-2">
+        <button className="px-4 py-2 rounded-md bg-accent-blue hover:bg-blue-500">
+          Upload
         </button>
-        <button className="px-4 py-2 bg-accent-blue rounded text-white">
-          Start AI Analysis
-        </button>
+        {files.length > 0 && (
+          <button 
+            onClick={clearFiles} 
+            className="px-4 py-2 rounded-md bg-gray-600 hover:bg-gray-700"
+          >
+            Clear
+          </button>
+        )}
       </div>
+      {files.length > 0 && (
+        <ul className="mt-4 text-gray-400 text-sm">
+          {files.map((file, i) => (
+            <li key={i}>• {file.name}</li>
+          ))}
+        </ul>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default LogUploader
+export default LogUploader;

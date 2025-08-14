@@ -1,7 +1,7 @@
-import { useApp } from '../../context/AppContext'
+import { useApp } from '../../context/AppContext';
 
 const Header = () => {
-  const { systemActive, setSystemActive } = useApp()
+  const { systemActive, setSystemActive } = useApp();
 
   return (
     <header className="bg-card-dark border-b border-gray-800">
@@ -11,11 +11,13 @@ const Header = () => {
             <div className="text-accent-blue text-2xl">⚡</div>
             <div>
               <h1 className="text-xl font-bold">ThreatSlayers AI</h1>
-              <p className="text-sm text-gray-400">Advanced Malware Detection System</p>
+              <p className="text-sm text-gray-400">
+                Advanced Malware Detection System
+              </p>
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <button 
+            <button
               onClick={() => setSystemActive(!systemActive)}
               className={`px-4 py-2 rounded-md ${
                 systemActive ? 'bg-accent-green' : 'bg-gray-600'
@@ -30,7 +32,7 @@ const Header = () => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

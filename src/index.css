@@ -2,18 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Add your custom global styles here */
 body {
-  @apply bg-base-dark text-white;
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-base-dark;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-gray-700 rounded-full;
+  background-color: #0f1117;
+  color: #fff;
 }

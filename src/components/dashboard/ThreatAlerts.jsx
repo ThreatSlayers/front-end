@@ -1,9 +1,11 @@
-import { useState } from 'react'
-import ThreatAlertDetails from './ThreatAlertDetails'
+// src/components/dashboard/ThreatAlerts.jsx
+import { useState } from 'react';
+import ThreatAlertDetails from './ThreatAlertDetails';
+import { Badge } from '../common/Badge';
 
 const ThreatAlerts = () => {
-  const [selectedAlert, setSelectedAlert] = useState(null)
-  
+  const [selectedAlert, setSelectedAlert] = useState(null);
+
   const alerts = [
     {
       id: 1,
@@ -33,10 +35,11 @@ const ThreatAlerts = () => {
       source: 'Network Monitor',
       time: '15 min ago'
     }
-  ]
+  ];
 
   return (
     <div className="bg-card-dark rounded-lg p-6">
+      {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-2">
           <span className="text-red-500">🚨</span>
@@ -47,19 +50,16 @@ const ThreatAlerts = () => {
         </span>
       </div>
 
+      {/* Alerts List */}
       <div className="space-y-4">
         {alerts.map(alert => (
           <div key={alert.id} className="bg-base-dark rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center space-x-2">
                 <h3 className="font-medium">{alert.title}</h3>
-                <span className={`px-2 py-1 rounded text-xs ${
-                  alert.severity === 'CRITICAL' 
-                    ? 'bg-red-500 bg-opacity-20 text-red-500'
-                    : 'bg-orange-500 bg-opacity-20 text-orange-500'
-                }`}>
+                <Badge type={alert.severity === 'CRITICAL' ? 'critical' : 'warning'}>
                   {alert.severity}
-                </span>
+                </Badge>
               </div>
             </div>
             <p className="text-sm text-gray-400 mb-2">{alert.description}</p>
@@ -77,17 +77,19 @@ const ThreatAlerts = () => {
         ))}
       </div>
 
+      {/* Footer Button */}
       <button className="mt-4 w-full py-2 border border-gray-700 rounded-lg text-sm hover:bg-gray-800">
         View All Alerts
       </button>
 
+      {/* Modal */}
       <ThreatAlertDetails
         isOpen={!!selectedAlert}
         onClose={() => setSelectedAlert(null)}
         alert={selectedAlert}
       />
     </div>
-  )
-}
+  );
+};
 
-export default ThreatAlerts
+export default ThreatAlerts;

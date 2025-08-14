@@ -1,3 +1,7 @@
+// src/components/dashboard/AIAnalysis.jsx
+import { ProgressBar } from '../common/ProgressBar'
+import { Badge } from '../common/Badge'
+
 const AIAnalysis = () => {
   const analysisResults = [
     {
@@ -19,6 +23,7 @@ const AIAnalysis = () => {
 
   return (
     <div className="bg-card-dark rounded-lg p-6">
+      {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-2">
           <span className="text-accent-blue">🤖</span>
@@ -27,6 +32,7 @@ const AIAnalysis = () => {
         <span className="text-sm text-gray-400">LSTM Autoencoder</span>
       </div>
 
+      {/* Analysis Results */}
       <div className="space-y-4">
         {analysisResults.map(result => (
           <div key={result.id} className="bg-base-dark rounded-lg p-4">
@@ -34,12 +40,9 @@ const AIAnalysis = () => {
               <div className="flex items-center space-x-2">
                 <span className="text-accent-blue">📄</span>
                 <span className="font-medium">{result.name}</span>
-                <span className={`px-2 py-1 rounded text-xs ${
-                  result.status === 'SUSPICIOUS' ? 'bg-yellow-500 bg-opacity-20 text-yellow-500' 
-                  : 'bg-green-500 bg-opacity-20 text-green-500'
-                }`}>
+                <Badge type={result.status === 'SUSPICIOUS' ? 'warning' : 'success'}>
                   {result.status}
-                </span>
+                </Badge>
               </div>
               <span className="text-sm text-gray-400">Analyzed at {result.timestamp}</span>
             </div>
@@ -49,14 +52,10 @@ const AIAnalysis = () => {
                 <span className="text-sm text-gray-400">Confidence Score</span>
                 <span className="text-sm">{result.confidence}%</span>
               </div>
-              <div className="w-full bg-base-dark rounded-full h-2">
-                <div 
-                  className={`h-2 rounded-full ${
-                    result.status === 'SUSPICIOUS' ? 'bg-yellow-500' : 'bg-green-500'
-                  }`}
-                  style={{ width: `${result.confidence}%` }}
-                />
-              </div>
+              <ProgressBar
+                value={result.confidence}
+                color={result.status === 'SUSPICIOUS' ? 'bg-yellow-500' : 'bg-green-500'}
+              />
             </div>
 
             {result.anomalies && (

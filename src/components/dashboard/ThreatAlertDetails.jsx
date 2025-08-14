@@ -1,13 +1,17 @@
-import { Fragment } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
+import { Fragment } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import { XMarkIcon } from '@heroicons/react/24/outline';
+import { Badge } from '../common/Badge';
 
 const ThreatAlertDetails = ({ isOpen, onClose, alert }) => {
-  if (!alert) return null
+  if (!alert) return null;
+
+  const severityType = alert.severity === 'CRITICAL' ? 'critical' : 'warning';
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
+        {/* Overlay */}
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -20,6 +24,7 @@ const ThreatAlertDetails = ({ isOpen, onClose, alert }) => {
           <div className="fixed inset-0 bg-black bg-opacity-70" />
         </Transition.Child>
 
+        {/* Dialog Panel */}
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
             <Transition.Child
@@ -32,24 +37,23 @@ const ThreatAlertDetails = ({ isOpen, onClose, alert }) => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full max-w-2xl bg-card-dark rounded-lg">
+                {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-gray-700">
                   <div className="flex items-center space-x-2">
                     <span className="text-red-500">⚠️</span>
                     <Dialog.Title className="text-xl font-semibold flex items-center">
                       Threat Alert Details
-                      <span className="ml-3 px-2 py-1 bg-red-500 bg-opacity-20 text-red-500 rounded text-sm">
+                      <Badge type={severityType} className="ml-3">
                         {alert.severity}
-                      </span>
+                      </Badge>
                     </Dialog.Title>
                   </div>
-                  <button
-                    onClick={onClose}
-                    className="text-gray-400 hover:text-white"
-                  >
+                  <button onClick={onClose} className="text-gray-400 hover:text-white">
                     <XMarkIcon className="w-6 h-6" />
                   </button>
                 </div>
 
+                {/* Content */}
                 <div className="p-6 space-y-4">
                   <div>
                     <h3 className="text-lg font-medium">{alert.title}</h3>
@@ -82,6 +86,7 @@ const ThreatAlertDetails = ({ isOpen, onClose, alert }) => {
                     </div>
                   )}
 
+                  {/* Footer Buttons */}
                   <div className="flex justify-end space-x-4 mt-6">
                     <button
                       onClick={onClose}
@@ -89,9 +94,7 @@ const ThreatAlertDetails = ({ isOpen, onClose, alert }) => {
                     >
                       Mark as Resolved
                     </button>
-                    <button
-                      className="px-4 py-2 bg-accent-blue rounded-md"
-                    >
+                    <button className="px-4 py-2 bg-accent-blue rounded-md">
                       Investigate Further
                     </button>
                   </div>
@@ -102,7 +105,7 @@ const ThreatAlertDetails = ({ isOpen, onClose, alert }) => {
         </div>
       </Dialog>
     </Transition>
-  )
-}
+  );
+};
 
-export default ThreatAlertDetails
+export default ThreatAlertDetails;
